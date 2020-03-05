@@ -1,0 +1,688 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../reset.css" />
+    <link rel="icon" href="../_project01/img/favicon.png" type='image/x-icon' />
+    <title>컴퓨터</title>
+    <style id="global">
+        * {
+            font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft JhengHei", "Apple SD Gothic Neo", "Malgun Gothic", AppleGothic, Dotum, 돋움, "Lucida Grande", Verdana, Arial, Tahoma, sans-serif;
+            margin: 0;
+        }
+    </style>
+    <style id="header">
+        #menu {
+            background-color: #efecec;
+            margin: 0 auto;
+        }
+    </style>
+    <!--탑메뉴-->
+    <style>
+        .top_menu {
+            width: 1400px;
+            height: 30px;
+            margin: 0 auto;
+            line-height: 40px;
+            position: relative;
+        }
+
+            .top_menu > ul {
+                overflow: hidden;
+                position: absolute;
+                right: 40px;
+            }
+
+                .top_menu > ul > li {
+                    float: left;
+                    padding-right: 30px;
+                }
+
+                    .top_menu > ul > li > a {
+                        color: #0073A6;
+                        font-size: 16px;
+                    }
+
+                        .top_menu > ul > li > a:hover {
+                            text-decoration: underline;
+                        }
+    </style>
+    <!--중간메뉴-->
+    <style>
+        .middle_menu {
+            width: 1400px;
+            height: 80px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+            overflow: hidden;
+        }
+
+            .middle_menu > div {
+                float: left;
+            }
+
+            .middle_menu > .search_menu {
+                padding: 30px 30px;
+                width: 800px;
+                height: 40px;
+                margin: 0 30px;
+            }
+
+                .middle_menu > .search_menu > .search_menu_form {
+                    position: relative;
+                }
+
+                    .middle_menu > .search_menu > .search_menu_form > a {
+                        display: block;
+                        position: absolute;
+                        left: 685px;
+                        bottom: 5px;
+                    }
+
+                    .middle_menu > .search_menu > .search_menu_form > input {
+                        width: 730px;
+                        height: 40px;
+                        font-size: 15px;
+                    }
+
+                        .middle_menu > .search_menu > .search_menu_form > input[type=text] {
+                            border: 1px solid #0073A6;
+                        }
+
+            .middle_menu > .login_bx {
+                overflow: hidden;
+                margin-top: 29px;
+                height: 60px;
+                width: 210px;
+                position: relative;
+            }
+
+                .middle_menu > .login_bx > span {
+                    float: right;
+                    padding: 10px 10px;
+                }
+
+                    .middle_menu > .login_bx > span a {
+                        font-size: 18px;
+                        color: #0073A6;
+                    }
+
+                        .middle_menu > .login_bx > span a:hover {
+                            text-decoration: underline;
+                        }
+
+                .middle_menu > .login_bx > .border_h {
+                    height: 22px;
+                    width: 2px;
+                    border-left: 1px solid #cfc5c5;
+                    margin-right: 5px;
+                }
+
+                .middle_menu > .login_bx > a > img {
+                    height: 25px;
+                    width: 27px;
+                    position: absolute;
+                    left: 102px;
+                    top: 7px;
+                }
+    </style>
+    <!--바텀메뉴-->
+    <style>
+        .bottom_menu {
+            height: 50px;
+            background-color: #0073A6;
+        }
+
+            .bottom_menu > .bottom_menu2 {
+                width: 1400px;
+                margin: 0 auto;
+            }
+
+                .bottom_menu > .bottom_menu2 > ul {
+                    overflow: hidden;
+                    margin-left: 20px;
+                }
+
+                    .bottom_menu > .bottom_menu2 > ul > li {
+                        float: left;
+                    }
+
+                        .bottom_menu > .bottom_menu2 > ul > li > a {
+                            color: white;
+                            font-size: 18.5px;
+                            padding: 0 22px;
+                            line-height: 45px;
+                        }
+
+            .bottom_menu > .bottom_menu2 {
+                position: relative;
+            }
+
+                .bottom_menu > .bottom_menu2 > a > img {
+                    position: absolute;
+                    left: 11px;
+                    top: 10px;
+                }
+    </style>
+    <style id="main_section">
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            color: #333333;
+            box-sizing: border-box;
+        }
+
+            .container h2 {
+                font-size: 21px;
+                font-weight: 400;
+                color: rgb(0, 96, 169);
+            }
+
+            .container ul {
+                list-style: none;
+            }
+
+            .container a {
+                text-decoration: none;
+                color: #333333;
+            }
+
+            .container h2:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-section {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+            .breadcrumb-section > .breadcrumb {
+                padding: 20px 0px 8px 2px;
+            }
+
+        .breadcrumb li {
+            display: inline-block;
+        }
+
+            .breadcrumb li > a:hover {
+                text-decoration: underline;
+            }
+
+            .breadcrumb li + li::before {
+                content: "/";
+                font-size: 1em;
+                padding: 0 4px 0 5px;
+            }
+
+        .banner a {
+            display: block;
+        }
+
+        .category-section-header {
+            font-size: 30px;
+            line-height: 1.4;
+        }
+
+        .category-wrapper > .category-node {
+            margin: 5px 0.7%;
+            padding: 0;
+            width: 23%;
+            display: inline-block;
+        }
+
+        .content {
+            height: 235px;
+            position: relative;
+        }
+
+            .content > .content-collection {
+                position: absolute;
+                left: -15px;
+                right: -15px;
+            }
+
+                .content > .content-collection > .wrapper-node {
+                    margin: 5px 0 0px 0;
+                    padding-bottom: 1.5%;
+                    overflow: hidden;
+                }
+
+                    .content > .content-collection > .wrapper-node > .content-node {
+                        width: 50%;
+                        float: left;
+                    }
+
+                        .content > .content-collection > .wrapper-node > .content-node a {
+                            padding: 0 10px 0 10px;
+                        }
+
+        .aside_block > .aside {
+            position: fixed;
+            right: 0;
+            top: 350px;
+        }
+    </style>
+    <style id="footer">
+        bady {
+            min-width: 1000px;
+        }
+
+        #background {
+            background-color: #efefef;
+        }
+
+        #footer_wrap {
+            width: 1400px;
+            height: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+            #footer_wrap > #footer_top {
+                position: absolute;
+                overflow: hidden;
+                width: 1400px;
+                height: 145px;
+                border-bottom: 1px solid gray;
+            }
+
+                #footer_wrap > #footer_top > .footer_top_section {
+                    float: left;
+                    width: 350px;
+                    height: 88px;
+                    margin-top: 15px;
+                }
+
+                    #footer_wrap > #footer_top > .footer_top_section > .top_section {
+                        font-size: 21px;
+                        padding: 20px;
+                        line-height: 30px;
+                    }
+
+                        #footer_wrap > #footer_top > .footer_top_section > .top_section > img {
+                            padding-right: 10px;
+                        }
+                        #footer_wrap > #footer_top > .footer_top_section > .top_section > div{position :relative;}
+                            #footer_wrap > #footer_top > .footer_top_section > .top_section > div > a {
+                                display: block;
+                                position: absolute;
+                                left: 140px;
+                                bottom: -7px;
+                            }
+
+                        #footer_wrap > #footer_top > .footer_top_section > .top_section > p > a {
+                            color: #0060a9;
+                            font-size: 18px;
+                        }
+
+                            #footer_wrap > #footer_top > .footer_top_section > .top_section > p > a:hover {
+                                text-decoration: underline;
+                            }
+
+                        #footer_wrap > #footer_top > .footer_top_section > .top_section > ul {
+                            overflow: hidden;
+                        }
+
+                            #footer_wrap > #footer_top > .footer_top_section > .top_section > ul > li {
+                                float: left;
+                                margin-right: 22px;
+                            }
+
+                                #footer_wrap > #footer_top > .footer_top_section > .top_section > ul > li .follow {
+                                    width: 32px;
+                                    height: 32px;
+                                }
+
+            #footer_wrap > #footer_mid {
+                top: 148px;
+                position: absolute;
+                width: 1400px;
+                height: 200px;
+                padding: 20px;
+                overflow: hidden;
+            }
+
+                #footer_wrap > #footer_mid > .mid_section {
+                    float: left;
+                    width: 350px;
+                    line-height: 1.7em;
+                }
+
+                    #footer_wrap > #footer_mid > .mid_section > ul > li > a {
+                        color: #5f5f5f;
+                    }
+
+                        #footer_wrap > #footer_mid > .mid_section > ul > li > a:hover {
+                            text-decoration: underline;
+                        }
+
+            #footer_wrap > #footer_bottom {
+                position: absolute;
+                top: 385px;
+                overflow: hidden;
+            }
+
+                #footer_wrap > #footer_bottom > #footer_bottom_header {
+                    width: 1400px;
+                    height: 60px;
+                    text-align: center;
+                    border-top: 1px solid gray;
+                }
+
+                    #footer_wrap > #footer_bottom > #footer_bottom_header > #footer_bottom_text {
+                        height: 30px;
+                        width: 490px;
+                        padding: 20px;
+                        margin: 0 auto;
+                        color: #5f5f5f;
+                    }
+
+                        #footer_wrap > #footer_bottom > #footer_bottom_header > #footer_bottom_text > ul {
+                            overflow: hidden;
+                        }
+
+                            #footer_wrap > #footer_bottom > #footer_bottom_header > #footer_bottom_text > ul > li {
+                                float: left;
+                            }
+
+                                #footer_wrap > #footer_bottom > #footer_bottom_header > #footer_bottom_text > ul > li > a {
+                                    margin: 0 10px;
+                                    color: #333;
+                                }
+
+                                    #footer_wrap > #footer_bottom > #footer_bottom_header > #footer_bottom_text > ul > li > a:hover {
+                                        text-decoration: underline;
+                                    }
+
+                #footer_wrap > #footer_bottom > #footer_bottom_section {
+                    width: 900px;
+                    height: 140px;
+                    overflow: hidden;
+                    margin: 0;
+                    float: left;
+                    padding-left: 25px;
+                    color: #5f5f5f;
+                }
+
+                    #footer_wrap > #footer_bottom > #footer_bottom_section > #footer_bottom_section_cer {
+                        float: left;
+                    }
+
+                #footer_wrap > #footer_bottom > #footer_bottom_aside {
+                    width: 380px;
+                    height: 125px;
+                    float: right;
+                    padding: 10px;
+                    color: #5f5f5f;
+                }
+
+        #footer_bottom_footer {
+            overflow: hidden;
+        }
+
+        #footer_bottom_footer_text {
+            text-align: center;
+            height: 70px;
+            color: #5f5f5f;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <div class="top_menu">
+            <ul>
+                <li><a href="#">회원가입</a></li>
+                <li><a href="#">온라인등록</a></li>
+                <li><a href="#">구독하기</a></li>
+                <li><a href="#">매장찾기</a></li>
+                <li><a href="#">보청기센터</a></li>
+                <li><a href="#">고객센터</a></li>
+                <li><a href="#">한국어</a></li>
+                <li><a href="#">국가선택 한국</a></li>
+            </ul>
+        </div>
+        <div class="middle_menu">
+            <div><a href="#"><img src="images/17419544428574.png" width="270" height="75" /></a></div>
+            <div class="search_menu">
+                <div class="search_menu_form">
+                    <input type="text" placeholder="찾으시는 상품을 입력해 보세요." style="padding-left: 10px;" />
+                    <a href="#"><img src="images/icon.jpg" width="28" height="30" /></a>
+                </div>
+            </div>
+            <div class="login_bx">
+                <span><a href="#">쇼핑카트</a></span>
+                <a href="#"><img src="images/sss.png" /></a>
+                <span class="border_h"></span>
+                <span><a href="#" style="padding-right: 10px;">로그인</a></span>
+            </div>
+        </div>
+        <div class="bottom_menu">
+            <div class="bottom_menu2">
+                <a href="#"><img src="images/mmm.png" /></a>
+                <ul>
+                    <li><a href="#">카테고리 전체보기</a></li>
+                    <li><a href="#">온라인 월렛</a></li>
+                    <li><a href="#">스페셜 할인</a></li>
+                    <li><a href="#">바이어추천상품</a></li>
+                    <li><a href="#">신상품</a></li>
+                    <li><a href="#">커클랜드 시그니춰</a></li>
+                    <li><a href="#">인기상품</a></li>
+                    <li><a href="#">설 선물세트관</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container bottom-header">
+        <div class="breadcrumb-section">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">메인</a>
+                </li>
+                <li class="actived">컴퓨터</li>
+            </ul>
+        </div>
+    </div>
+    <div class="container main-wrapper">
+        <div class="row">
+            <section class="page-browse-category">
+                <div class="banner">
+                    <a href="#">
+                        <img src="img/banner.jpg" />
+                    </a>
+                </div>
+                <p class="category-section-header">&nbsp;</p>
+                <div class="category-wrapper">
+                    <!-- <div class="category-node">
+                        <a href="#">
+                            <div>
+                                <img class="category-img" src="img/desktop.jpg" />
+                            </div>
+                            <h2>
+                                <span>데스크탑</span>
+                            </h2>
+                        </a>
+                    </div> -->
+                    <div class="category-node">
+                        <a href="#">
+                            <div>
+                                <img class="category-img" src="img/laptop.jpg" />
+                            </div>
+                            <h2>
+                                <span>노트북</span>
+                            </h2>
+                        </a>
+                    </div>
+                    <div class="category-node">
+                        <a href="#">
+                            <div>
+                                <img class="category-img" src="img/tablet.jpg" />
+                            </div>
+                            <h2>
+                                <span>태블릿</span>
+                            </h2>
+                        </a>
+                    </div>
+                    <div class="category-node">
+                        <a href="#">
+                            <div>
+                                <img class="category-img" src="img/game.jpg" />
+                            </div>
+                            <h2>
+                                <span>게임</span>
+                            </h2>
+                        </a>
+                    </div>
+                    <div class="category-node">
+                        <a href="#">
+                            <div>
+                                <img class="category-img" src="img/accessary.jpg" />
+                            </div>
+                            <h2>
+                                <span>컴퓨터 액세서리</span>
+                            </h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content-collection">
+                        <div class="wrapper-node">
+                            <div class="content-node">
+                                <a href="#">
+                                    <img src="img/whatsnew.jpg" />
+                                </a>
+                            </div>
+                            <div class="content-node">
+                                <a href="#">
+                                    <img src="img/popular.jpg" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="aside_block">
+        <div class="aside">
+            <a href="#"><img src="img/side.png" /></a>
+        </div>
+    </div>
+    <div id="background">
+        <div id="footer_wrap">
+            <footer_top id="footer_top">
+                <footer_section class="footer_top_section">
+                    <div class="top_section">
+                        <h1>고객센터</h1>
+                        <img style="padding-top:5px; float:left;" src="images/question.png" />
+                        <p><a href="#">FAQ</a></p>
+                    </div>
+                </footer_section>
+                <footer_section class="footer_top_section">
+                    <div class="top_section">
+                        <h1>매장찾기</h1>
+                        <div>
+                            <input style="height:25px;" type="text" placeholder="지역명" />
+                            <a href="#"><img src="images/icon.jpg" width="28" height="28" /></a>
+                        </div>
+                    </div>
+                </footer_section>
+                <footer_section class="footer_top_section">
+                    <div class="top_section">
+                        <h1>이메일 구독하기</h1>
+                        <p><a style="color:#0060a9;" href="#">Sign Up Today!</a></p>
+                    </div>
+                </footer_section>
+                <footer_section class="footer_top_section">
+                    <div class="top_section">
+                        <h1>Follow Us</h1>
+                        <ul>
+                            <li><img class="follow" src="https://www.costco.co.kr/mediapermalink/icn_sns_fb" /></li>
+                            <li><img class="follow" src="https://www.costco.co.kr/mediapermalink/icn_sns_kp" /></li>
+                            <li><img class="follow" src="https://www.costco.co.kr/mediapermalink/icn_sns_insta" /></li>
+                            <li><img class="follow" src="https://www.costco.co.kr/mediapermalink/icn_sns_you" /></li>
+                            <li><img class="follow" src="https://www.costco.co.kr/mediapermalink/icn_sns_ks" /></li>
+                        </ul>
+                    </div>
+                </footer_section>
+            </footer_top>
+            <footer_mid id="footer_mid">
+                <div class="mid_section">
+                    <h1>코스트코 소개</h1>
+                    <ul>
+                        <li><a href="#">코스트코는?</a></li>
+                        <li><a href="#">커클랜드 시그니춰</a></li>
+                        <li><a href="#">제품분류 & 서비스</a></li>
+                        <li><a href="#">채용</a></li>
+                    </ul>
+                </div>
+                <div class="mid_section">
+                    <h1>코스트코 멤버십</h1>
+                    <ul>
+                        <li><a href="#">회원가입</a></li>
+                        <li><a href="#">이그제큐티브 멤버십</a></li>
+                        <li><a href="#">온라인등록</a></li>
+                        <li><a href="#">마이페이지</a></li>
+                        <li><a href="#">주문내역</a></li>
+                        <li><a href="#">제휴신용카드</a></li>
+                    </ul>
+                </div>
+                <div class="mid_section">
+                    <h1>고객센터</h1>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">문의</a></li>
+                        <li><a href="#">리콜</a></li>
+                    </ul>
+                </div>
+                <div class="mid_section">
+                    <h1>매장 & 서비스</h1>
+                    <ul>
+                        <li><a href="#">매장안내</a></li>
+                        <li><a href="#">보청기센터</a></li>
+                        <li><a href="#">포토센터</a></li>
+                        <li><a href="#">벤더</a></li>
+                        <li><a href="#">코스트코 행사안내</a></li>
+                        <li><a href="#">로드쇼 행사안내</a></li>
+                    </ul>
+                </div>
+            </footer_mid>
+            <footer_bottom id="footer_bottom">
+                <div id="footer_bottom_header">
+                    <div id="footer_bottom_text">
+                        <ul>
+                            <li><a href="#">이용약관</a></li>
+                            <li><a style="color : blue;" href="#">개인정보처리방침</a></li>
+                            <li><a href="#">영상정보처리기기운영·관리방침</a></li>
+                            <li><a href="#">상표 사용 지침</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="footer_bottom_section">
+                    <p>(주)코스트코 코리아</p>
+                    <p style="line-height:1.7;">14347 경기도 광명시 일직로 40 (일직동 163-3) | 대표자 : 조민수 | 사업자 등록번호 : 107-81-63829 | 통신판매업 신고번호 : 제2013-경기광명-0013호 | 전화 : 1899-9900 | E-mail : webmanager@costcokr.com | 개인 정보 보호책임자 : 엄태은 | 호스팅제공자 : Google Ireland Ltd. | <a style="text-decoration:underline; color:inherit;" href="#">사업자정보확인</a></p>
+                    <img id="footer_bottom_section_cer" style="width:32px;height:32px;" src="https://www.costco.co.kr/mediapermalink/img_isms" />
+                    <div id="footer_bottom_section_cer">
+                        [인증범위] 코스트코 온라인몰 서비스 운영<br />
+                        [유효기간] 2018.12.27 ~ 2021.12.26
+                    </div>
+                </div>
+                <div id="footer_bottom_aside">
+                    <p>우리은행 구매 안전서비스</p>
+                    <p>회원님은 안전거래를 위해 실시간 계좌이체 결제시 코스트코에서 가입한 우리은행의 구매안전서비스(채무지급보증)를 이용하실 수 있습니다.</p>
+                    <p><a style="color:inherit;" href="#">서비스 가입사실 확인</a></p>
+                </div>
+
+            </footer_bottom>
+        </div>
+        <div id="footer_bottom_footer">
+            <div id="footer_bottom_footer_text">© 2020 Costco Wholesale Corporation. All rights reserved.</div>
+        </div>
+    </div>
+</body>
+</html>

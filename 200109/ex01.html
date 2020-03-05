@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../reset.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
+    <title></title>
+    <style>
+        #main_header {
+            position: relative;
+            text-align: center;
+            background-image: url(header_background.png);
+            height: 45px;
+            line-height: 45px;
+        }
+
+            #main_header > h1 {
+                color: azure;
+                font-weight: 800;
+                font-size: 1.5em;
+            }
+
+            #main_header > a, #main_header > label {
+                display: block;
+                height: 32px;
+                position: absolute;
+            }
+
+                #main_header > a.left {
+                    background: url(header_left_button.png);
+                    background-position: 0px 0px;
+                    width: 62px;
+                    left: 5px;
+                    top: 7px;
+                    text-indent: -9999px;
+                }
+
+                #main_header > label.right {
+                    background: url('header_right_button.png');
+                    background-position: -62px 0;
+                    width: 32px;
+                    right: 5px;
+                    top: 7px;
+                    text-indent: -9949px;
+                }
+
+        #toggle {
+            display: none;
+        }
+
+            #toggle + #wrap > #toggle_gnb_wrap {
+                display: none;
+            }
+
+            #toggle:checked + #wrap > #toggle_gnb_wrap {
+                display: block;
+            }
+
+        #toggle_gnb_wrap {
+            background: #0094ff;
+            padding: 15px;
+        }
+
+        #toggle_gnb {
+            background: azure;
+            padding: 5px;
+        }
+
+            #toggle_gnb > ul {
+                overflow: hidden;
+            }
+
+            #toggle_gnb li {
+                float: left;
+                width: 100px;
+            }
+
+        #top_gnb {
+            background-color: darkcyan;
+            overflow: hidden;
+            border-bottom: 1px solid black;
+        }
+
+            #top_gnb > div a {
+                float: left;
+                width: 25%;
+                height: 35px;
+                line-height: 35px;
+                text-align: center;
+                color: azure;
+            }
+
+        #bottom_gnb {
+            display: table;
+            width: 100%;
+        }
+
+            #bottom_gnb div {
+                display: table-cell;
+                position: relative;
+            }
+
+            #bottom_gnb a {
+                display: block;
+                height: 35px;
+                line-height: 35px;
+                text-align: center;
+            }
+
+            #bottom_gnb > div > a::before {
+                display: block;
+                position: absolute;
+                top: 9px;
+                left: -1px;
+                width: 1px;
+                height: 15px;
+                border-left: 1px solid black;
+                content: '';
+            }
+
+        #section_article {
+            padding: 10px;
+        }
+
+        #section_header {
+            padding: 20px;
+        }
+
+        #main_footer {
+            text-align: center;
+            border-top: 2px solid black;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input id="toggle" type="checkbox" />
+    <div id="wrap">
+        <header id="main_header">
+            <a class="left" href="#">Main</a>
+            <h1>Mobile</h1>
+            <label class="right" for="toggle">Toggle</label>
+        </header>
+        <div id="toggle_gnb_wrap">
+            <div id="toggle_gnb">
+                <ul>
+                    <li><a href="#">Button</a></li>
+                    <li><a href="#">Button</a></li>
+                    <li><a href="#">Button</a></li>
+                    <li><a href="#">Button</a></li>
+                    <li><a href="#">Button</a></li>
+                    <li><a href="#">Button</a></li>
+                    <li><a href="#">Button</a></li>
+                    <li><a href="#">Button</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="top_gnb">
+            <div><a href="#">Button</a></div>
+            <div><a href="#">Button</a></div>
+            <div><a href="#">Button</a></div>
+            <div><a href="#">Button</a></div>
+        </div>
+        <nav id="bottom_gnb">
+            <div><a href="#">Click</a></div>
+            <div><a href="#">Click</a></div>
+            <div><a href="#">Click</a></div>
+            <div><a href="#">Click</a></div>
+            <div><a href="#">Click</a></div>
+        </nav>
+        <section id="main_section">
+            <header id="section_header">
+                <h1 style="font-size:22px; font-weight: bolder;">Samuel L. Ipsum</h1>
+                <time>2020-01-09 -today</time>
+            </header>
+            <article id="section_article">
+                <p>
+                    Now that there is thfgfge Tec-9, a crappy spray gun from South Miami. This gun is advertised as the most popular gun in American crime.
+                    Do you believe that shit? It actually says that in the little book that comes with it: the most popular gun in American crime.
+                    Like they're actually proud of that shit.
+                </p>
+                <br />
+                <p>
+                    Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it?
+                    Do you see a little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when you put quarters in it?
+                    No? Well, that's what you see at a toy store. And you must think you're in a toy store, because you're here shopping for an infant named Jeb.
+                </p>
+            </article>
+        </section>
+        <footer id="main_footer">
+            <h3>HTML5 + CSS3 STUDY</h3>
+            <address>somewhere over the rainbow</address>
+        </footer>
+    </div>
+</body>
+</html>

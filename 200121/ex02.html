@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #graph {
+            width: 610px;
+            border: 3px solid black;
+        }
+        div.bar {
+            height: 50px;
+            width: 100px;
+            background-color: dodgerblue;
+            margin: 10px;
+        }
+        #graph:hover {
+            background-color: coral;
+        }
+        #graph:hover > div.bar:nth-child(1) {
+            width: 500px;
+        }
+        #graph:hover > div.bar:nth-child(2) {
+            width: 400px;
+        }
+        #graph:hover > div.bar:nth-child(3) {
+            width: 350px;
+        }
+        .bar:nth-child(1) {
+            transition-delay: 0.5s;
+            transition-duration: 2s;
+            transition-timing-function: ease;
+        }
+        .bar:nth-child(2) {
+            transition-delay: 1s;
+            transition-duration: 2s;
+            transition-timing-function: linear;
+        }
+        .bar:nth-child(3) {
+            transition-delay: 1.5s;
+            transition-duration: 2s;
+            transition-timing-function: ease-in-out;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>CSS Transition Graph</h1>
+    <div id="graph">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</body>
+</html>

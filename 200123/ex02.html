@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .aside-box3d {
+            width: 200px;
+            margin: 0 auto;
+            perspective: 1600;
+            -webkit-perspective: 1600;
+        }
+
+        .box3d {
+            top: 300px;
+            width: 100px;
+            height: 100px;
+            position: relative;
+
+            animation: rint 5s ease-in-out 0s infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes rint {
+            from {
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+
+            to {
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+
+        .outer {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0.8;
+
+        }
+        div.outer:nth-child(1) {
+            transform: rotateY(0deg) translate3d(0, 0, 50px); 
+            background:indianred;
+        }
+        div.outer:nth-child(2) {
+            transform: rotateY(90deg) translate3d(0, 0, 50px); 
+            background-color:dodgerblue;    
+        }
+        div.outer:nth-child(3) { 
+            transform: rotateY(180deg) translate3d(0, 0, 50px); 
+            background-color: sandybrown;    
+        }
+        div.outer:nth-child(4) { 
+            transform: rotateY(270deg) translate3d(0, 0, 50px); 
+            background-color:slateblue;
+        }
+        div.outer:nth-child(5) { 
+            transform: rotateX(90deg) translate3d(0, 0, 50px); 
+            background-color:teal;
+        }
+        div.outer:nth-child(6) { 
+            transform: rotateX(270deg) translate3d(0, 0, 50px); 
+            background-color: seagreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="aside-box3d">
+        <section class="box3d">
+            <div class="outer"></div>
+            <div class="outer"></div>
+            <div class="outer"></div>
+            <div class="outer"></div>
+            <div class="outer"></div>
+            <div class="outer"></div>
+            <div class="inner"></div>
+            <div class="inner"></div>
+            <div class="inner"></div>
+            <div class="inner"></div>
+            <div class="inner"></div>
+            <div class="inner"></div>
+        </section>
+    </div>
+</body>
+</html>
