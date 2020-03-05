@@ -1,0 +1,459 @@
+﻿<!DOCTYPE html>
+
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MILLY</title>
+    <link rel="icon" href="favicon.png" type='image/x-icon' />
+    <style id="style-global">
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        * {
+            margin: 0;
+        }
+
+        body {
+            background-color: #f2f4f7;
+        }
+    </style>
+    <style class="style-main">
+        .container {
+            position: relative;
+            width: 1024px;
+            margin: 0 auto;
+        }
+
+        .header-back {
+            height: 110px;
+            margin: 0 auto;
+            padding: 20px 0 0 0;
+            background-color: white;
+            border-bottom: 1px solid #d1d8e4;
+            position: relative;
+        }
+
+        .top {
+            width: 1024px;
+            height: 22px;
+            margin: 0px auto 0;
+            padding: 0px 0 0 0;
+            position: relative;
+            background-color: rgb(240, 128, 128);
+        }
+
+        .header {
+            width: 1024px;
+            height: 50px;
+            margin: 0px auto;
+            background-color: antiquewhite;
+            position: relative;
+        }
+
+        .header-nav {
+            width: 1024px;
+            height: 40px;
+            margin: 0 auto;
+        }
+
+            .header-nav > .header-nav-top ul {
+                padding: 0;
+                overflow: hidden;
+            }
+
+            .header-nav > .header-nav-top li {
+                width: 20%;
+                float: left;
+                list-style: none;
+            }
+
+            .header-nav > .header-nav-top a {
+                padding: 5px;
+                font-size: 20px;
+                text-align: center;
+                display: block;
+            }
+
+            .header-nav > .header-nav-top a:hover {
+                color: indianred;
+            }
+
+            .header-nav > .header-nav-top li:hover {
+                border-bottom: 3px solid indianred;
+            }
+        .pepe {
+            width: 200px;
+            height: 85px;
+            background-image: url(pepe5.png);
+            background-size: 45%;
+            background-repeat: no-repeat;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .wrap {
+            width: 1024px;
+            margin: 0 auto;
+            padding: 10px 0 0 0;
+            overflow: hidden;
+        }
+
+            .wrap > div.contents {
+                float: left;
+                width: 20%; 
+                margin: 20px 10px 20px 10px;
+                padding: 10px;
+            }
+
+        .contents li {
+            margin: 3px auto;
+        }
+
+        .contents ol {
+            margin: 20px 0;
+        }
+
+        .contents ul {
+            margin: 20px 0;
+        }
+
+        .contents a:hover {
+            background-color: lightgreen;
+        }
+
+        div.milly {
+            width: 202px;
+            border-left: 1px solid #d1d8e4;
+            border-right: 1px solid #d1d8e4;
+            border-bottom: 1px solid #d1d8e4;
+            background-image: url(milly4.png);
+            background-repeat: no-repeat;
+            background-size: 70%;
+            background-position: bottom right;
+            background-color: white;
+        }
+
+        div.milly:hover {
+            animation-name: milly;
+            animation-duration: 0.1s;
+            animation-timing-function: ease-in-out;
+        }
+
+        @keyframes milly{
+            100%{
+                transform: scale(1.03);
+            }
+        }
+
+        div h3 {
+            background-color: lightseagreen;
+            opacity: 0.5;
+            padding: 5px;
+            margin: 0 auto;
+            font-style: italic;
+        }
+
+        .footer {
+            height: 100px;
+            border-top: 1px solid #d1d8e4;
+            background-color: #ffffff;
+        }
+
+            .footer > div {
+                width: 1024px;
+                margin: 0 auto;
+                padding: 5px;
+            }
+    </style>
+    <style class="style-aside-box3d">
+        .aside-box3d {
+                position: absolute;
+                top: 50px;
+                left: -120px;
+                perspective: 400;
+                -webkit-perspective: 400;
+            }
+
+            .box3d {
+                width: 70px;
+                height: 70px;
+                position: relative;
+
+                animation: rint 5s ease-in-out 0s infinite;
+                transform-style: preserve-3d;
+            }
+
+            @keyframes rint {
+                from {
+                    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                }
+                to {
+                    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+                }
+            }
+
+            .outer {
+                width: 70px;
+                height: 70px;
+                position: absolute;
+                opacity: 0.6;
+            }
+
+            div.outer:nth-child(1) {
+                transform: rotateY(0deg) translate3d(0, 0, 35px); 
+                background:indianred;
+            }
+            div.outer:nth-child(2) {
+                transform: rotateY(90deg) translate3d(0, 0, 35px); 
+                background-color:dodgerblue;    
+            }
+            div.outer:nth-child(3) { 
+                transform: rotateY(180deg) translate3d(0, 0, 35px); 
+                background-color: lightseagreen;    
+            }
+            div.outer:nth-child(4) { 
+                transform: rotateY(270deg) translate3d(0, 0, 35px); 
+                background-color:darkorange;
+            }
+            div.outer:nth-child(5) { 
+                transform: rotateX(90deg) translate3d(0, 0, 35px); 
+                background-color:teal;
+            }
+            div.outer:nth-child(6) { 
+                transform: rotateX(270deg) translate3d(0, 0, 35px); 
+                background-color: seagreen;
+            }
+
+                .box3d-inner{
+                    top: 30px;
+                    left: 30px;
+                    width: 10px;
+                    height: 10px;
+                    position: absolute;
+                    animation: AAA 0.8s linear 0s infinite;
+                    transform-style: preserve-3d;
+                }
+
+                @keyframes AAA {
+                    from {
+                        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                    }
+                    to {
+                        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+                    }
+                }
+
+                .inner {
+                    width: 10px;
+                    height: 10px;
+                    position: absolute;
+                    opacity: 1;
+                }
+
+                div.inner:nth-child(1) {
+                    transform: rotateY(0deg) translate3d(0, 0, 5px); 
+                    background: black;
+                }
+                div.inner:nth-child(2) {
+                    transform: rotateY(90deg) translate3d(0, 0, 5px); 
+                    background-color:black;    
+                }
+                div.inner:nth-child(3) { 
+                    transform: rotateY(180deg) translate3d(0, 0, 5px); 
+                    background-color: black;    
+                }
+                div.inner:nth-child(4) { 
+                    transform: rotateY(270deg) translate3d(0, 0, 5px); 
+                    background-color: black;
+                }
+                div.inner:nth-child(5) { 
+                    transform: rotateX(90deg) translate3d(0, 0, 5px); 
+                    background-color:black;
+                }
+                div.inner:nth-child(6) { 
+                    transform: rotateX(270deg) translate3d(0, 0, 5px); 
+                    background-color: black;
+                }
+    </style>
+</head>
+
+<body>
+    <div class="header-back">
+        <div class="top">
+        </div>
+        <div class="header">
+            <h1 style="margin: 0 15px 0 15px;">HTML5+CSS Study</h1>
+            <div class="pepe"></div>
+        </div>
+        <div class="header-nav">
+            <div class="header-nav-top">
+                <ul>
+                    <li><a href="_project01/costco.html">Costco mock-up</a></li>
+                    <li><a href="#">MEOW</a></li>
+                    <li><a href="#">MEOW</a></li>
+                    <li><a href="#">MEOW</a></li>
+                    <li><a href="#">MEOW</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="aside-box3d">
+            <section class="box3d">
+                <div class="outer"></div>
+                <div class="outer"></div>
+                <div class="outer"></div>
+                <div class="outer"></div>
+                <div class="outer"></div>
+                <div class="outer"></div>
+                <sectoin class="box3d-inner">
+                    <div class="inner"></div>
+                    <div class="inner"></div>
+                    <div class="inner"></div>
+                    <div class="inner"></div>
+                    <div class="inner"></div>
+                    <div class="inner"></div>
+                </sectoin>
+            </section>
+        </div>
+        <div class="wrap">
+            <div class="contents">
+                <div class="milly">
+                    <h3>20191224</h3>
+                    <ol>
+                        <li><a href="191224/191224.html">191224</a></li>
+                        <li><a href="191224/191224_2.html">191224_2</a></li>
+                        <li><a href="191224/191224_3.html">191224_3</a></li>
+                        <li><a href="191224/191224_4.html">191224_4</a></li>
+                        <li><a href="191224/191224_5.html">191224_5</a></li>
+                        <li><a href="191224/191224_6.html">191224_6</a></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20191226</h3>
+                    <ul>
+                        <li><a href="191226/191226_01.html">191226_01</a></li>
+                        <li><a href="191226/191226_02.html">191226_02</a></li>
+                        <li><a href="191226/191226_03.html">191226_03</a></li>
+                        <li><a href="191226/191226_04.html">191226_04</a></li>
+                        <li><a href="191226/191226_05.html">191226_05</a></li>
+                        <li><a href="191226/191226_06.html">191226_06</a></li>
+                        <li><a href="191226/191226_07.html">191226_07</a></li>
+                        <li><a href="191226/191226_08.html">191226_08</a></li>
+                        <li><a href="191226/191226_09.html">191226_09</a></li>
+                        <li><a href="191226/191226_10.html">191226_10</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20191231</h3>
+                    <ul>
+                        <li><a href="191231/ex01.html">ex01</a></li>
+                        <li><a href="191231/ex02.html">ex02</a></li>
+                        <li><a href="191231/ex04.html">ex04</a></li>
+                        <li><a href="191231/ex05.html">ex05</a></li>
+                        <li><a href="191231/ex06.html">ex06</a></li>
+                        <li><a href="191231/ex07.html">ex07</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20200102</h3>
+                    <ul>
+                        <li><a href="200102/ex01.html">ex01</a></li>
+                        <li><a href="200102/ex02.html">ex02</a></li>
+                        <li><a href="200102/ex03.html">ex03</a></li>
+                        <li><a href="200102/ex04.html">ex04</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="wrap">
+            <div class="contents">
+                <div class="milly">
+                    <h3>20200106</h3>
+                    <ul>
+                        <li><a href="200106/ex01.html">Web browser layout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20200109</h3>
+                    <ul>
+                        <li><a href="200109/ex01.html">Mobile layout-01</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20200112</h3>
+                    <ul>
+                        <li><a href="_project01/costco.html">Project01 -Costco mockup</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20200114</h3>
+                    <ul>
+                        <li><a href="200114/tablet.html">ex01</a></li>
+                        <li><a href="200114/ex02.html">ex02</a></li>
+                        <li><a href="200114/ex03.html">ex03 -js begin</a></li>
+                        <li><a href="200114/ex04.html">ex04</a></li>
+                        <li><a href="200114/ex05.html">ex05</a></li>
+                        <li><a href="200114/ex06.html">ex06</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20200116</h3>
+                    <ul>
+                        <li><a href="200116/ex1601.html">Coupang layout mockup</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20200121</h3>
+                    <ul>
+                        <li><a href="200121/ex01.html">ex01 -transition</a></li>
+                        <li><a href="200121/ex02.html">ex02 -transition</a></li>
+                        <li><a href="200121/ex03.html">ex03 -transition</a></li>
+                        <li><a href="200121/ex04.html">ex04 -animation</a></li>
+                        <li><a href="200121/ex05.html">ex05 -responsive web</a></li>
+                        <li><a href="200121/ex06.html">ex06 -layout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contents">
+                <div class="milly">
+                    <h3>20200123</h3>
+                    <ul>
+                        <li><a href="200123/ex01.html">ex01 -transform2D</a></li>
+                        <li><a href="200123/ex02.html">ex02 -transform3D</a></li>
+                        <li><a href="200123/ex03.html">ex03 -Bootstrap</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>
+            <p>contact<a href="#">dohp.kim@gmail.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
