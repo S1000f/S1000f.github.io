@@ -33,7 +33,6 @@ github: [metadata]
 markdown: kramdown
 
 # Build settings
-theme: jekyll-theme-leaf
 remote_theme: pages-themes/midnight@v0.2.0
 plugins:
   - jekyll-feed
