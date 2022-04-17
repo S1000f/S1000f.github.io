@@ -9,7 +9,6 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    chronic (0.10.2)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -181,10 +180,6 @@ GEM
     jekyll-theme-hacker (0.2.0)
       jekyll (> 3.5, < 5.0)
       jekyll-seo-tag (~> 2.0)
-    jekyll-theme-leaf (0.1.0)
-      jekyll (~> 3.8)
-      jekyll-feed (~> 0.9)
-      jekyll-seo-tag (~> 2.1)
     jekyll-theme-leap-day (0.2.0)
       jekyll (> 3.5, < 5.0)
       jekyll-seo-tag (~> 2.0)
@@ -230,24 +225,20 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mercenary (0.3.6)
-    midnight (1.0.0)
-      chronic (= 0.10.2)
-      numerizer (~> 0.1.1)
     minima (2.5.1)
       jekyll (>= 3.5, < 5.0)
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
     minitest (5.15.0)
     multipart-post (2.1.1)
-    nokogiri (1.13.3-x86_64-darwin)
+    nokogiri (1.13.4-x86_64-darwin)
       racc (~> 1.4)
-    numerizer (0.1.1)
     octokit (4.22.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
-    public_suffix (4.0.6)
+    public_suffix (4.0.7)
     racc (1.6.0)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
@@ -288,8 +279,9 @@ DEPENDENCIES
   github-pages (~> 225)
   http_parser.rb (~> 0.6.0)
   jekyll-feed (~> 0.12)
-  jekyll-theme-leaf
-  midnight
+  jekyll-paginate
+  jekyll-seo-tag
+  jekyll-sitemap
   minima (~> 2.5)
   tzinfo (~> 1.2)
   tzinfo-data
