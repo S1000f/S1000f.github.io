@@ -1,16 +1,16 @@
-title: Hacker-Blog
-description: "A Jekyll Blog Theme For Hackers"
+title: The-Least-Eligible-Codes
+description: "최대의 자유가 최대의 행복이라고 믿는 자유주의 개발자"
 author:
-  name: "SomeHacker"
-  email: "someone@somewebsite.somedomain"
-  url: "https://ashishchaudhary.in/hacker-blog"
+  name: "Nick the cat"
+  email: "dohp.kim@gmail.com"
+  url: "https://github.com/s1000f"
 
 baseurl: /
 
 source: .
 destination: ./_site
 permalink: /:title
-paginate: 3
+paginate: 5
 paginate_path: /page/:num/
 
 defaults:
@@ -26,7 +26,8 @@ plugins:
   - jekyll-seo-tag
   - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-archives
 
 # Custom variables
-owner : "SomeHacker"
-year : "2020"
+owner : "Nick the cat"
+year : "2022"
