@@ -20,7 +20,7 @@ tags: redis
 # 2. 최근 몇 단위 기간의 그래프 데이터를 저장하기
 레디스 리스트를 사용하여, 현재부터 지난 몇 기간동안의 변화를 기록할 수 있습니다.
 
-![](./chart0.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/chart0.png)
 
 위의 사진은 깃헙 리포지토리에 대한 커밋내역 그래프 예시입니다. 
 커밋 그래프는 최근 1년간의 변동만을 보여줍니다.
