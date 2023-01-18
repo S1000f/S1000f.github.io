@@ -11,7 +11,7 @@ tags: network, nginx
 
 # 1. 서버 준비
 
-![](home-server-01.jpeg)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-01.jpeg)
 
 ## 1.1 우분투 설치
 
@@ -25,13 +25,44 @@ tags: network, nginx
 
 라즈베리 파이가 없더라도 서버로 사용할 항상 켜져있는 컴퓨터가 있다면 상관없습니다.
 
-## 1.2 네트워크 연결
+## 1.2 서브 네트워크에 연결
 
-서버가 준비되었다면 우리집의 로컬 네트워크에 연결합니다. 랜선을 사용하여 유선으로 연결할 수 도 있고, 와이파이로 무선 연결을 해도 좋겠지요.
+서버가 준비되었다면 우리집의 서브 네트워크에 연결합니다. 랜선을 사용하여 유선으로 연결할 수 도 있고, 와이파이로 무선 연결을 해도 좋겠지요.
 
 > 저는 우분투 설치과정에서 와이파이 연결 설정을 했었지만 잘 동작하지 않았습니다. 검색 결과 해결한 방법은 아래와 같습니다.
 > 
 > `access-points` 아래 뎁스의 따옴표에 와이파이 이름을 입력합니다. 그리고 그 다음 뎁스의 `password` 항목에 와이파이 비밀번호를 입력합니다.
 > 두 경우 모두 따옴표로 감싸야합니다. 또한 파일포맷이 `YAML` 이므로, 들여쓰기를 반드시 지켜줘야 합니다.
-> ![](./home-server-02.png)
+> ![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-02.png)
 
+저는 아이피타임 공유기를 사용중입니다. 공유기가 DHCP 서버 역할을 하므로, 방금 연결된 기기에 알맞은 서브넷 IP 를 할당했을 겁니다.
+아이피타임은 브라우저로 접속할 수 있는 GUI 설정을 지원합니다. 웹 브라우저를 열고 'http://192.168.0.1' 으로 접속하여 관리자 계정으로
+로그인 합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-03.png)
+
+메뉴 '고급 설정 -> 네트워크 관리 -> 내부 네트워크 설정' 에서 방금 연결한 파이의 아이피를 확인 할 수 있습니다.
+저는 192.168.0.8 를 할당 받았습니다. 아이피 옆에 있는 데이터는 MAC 주소입니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-04.png)
+
+혹은 위와 같이 `ifconfig` 명령을 통해 파이 터미널에서 아이피를 직접 확인하실 수 도 있습니다.
+
+## 1.3 SSH 연결
+
+만약 라즈베리 파이에 모니터가 연결되어 있어서 항상 파이의 터미널을 사용할 수 있다면 ssh(secure shell) 사용은 필수는 아닙니다.
+저는 파이는 전원과 와이파이만 연결되어있고 별도의 모니터는 연결되어 있지 않으므로, ssh 접속을 사용하겠습니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-05.png)
+
+먼저 파이에서 `systemctl status ssh` 명령을 사용하여 ssh 데몬이 정상적으로 실행 중인지 확인합니다. 대부분은 기본적으로 부팅시
+ssh 서비스가 실행되지만 어떤 배포판에서는 기본적으로 비활성화 되어 있는 경우를 봤습니다.
+만약 ssh 서비스가 inactive 라면 `systemctl restart ssh` 명령으로 실행시켜줍니다.
+
+이제 라즈베리 파이 외부의 원격지에서 ssh 로 접속하겠습니다.
+`ssh <your_account>@192.168.0.8` 명령으로 접속합니다. <your_account> 부분을 여러분의 우분투 계정이름으로 바꿔주세요.
+마찬가지로 아이피도 여러분의 서버의 서브넷 아이피로 바꿔주십시오. 접속시 해당 계정의 비밀번호를 입력합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-06.png)
+
+ssh 로 접속하였습니다. 마지막 줄의 from 192.168.0.5 는 저의 데스크탑 컴퓨터의 서브넷 아이피입니다.
