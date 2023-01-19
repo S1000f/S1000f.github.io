@@ -66,3 +66,39 @@ ssh 서비스가 실행되지만 어떤 배포판에서는 기본적으로 비�
 ![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-06.png)
 
 ssh 로 접속하였습니다. 마지막 줄의 from 192.168.0.5 는 저의 데스크탑 컴퓨터의 서브넷 아이피입니다.
+다음으로 매번 'ssh 계정@호스트' 를 타이핑 하기 귀찬으니 ssh 설정파일에 호스트를 등록하겠습니다.
+~/.ssh/ 로 이동해서 'config' 파일이 있다면 수정하고 없다면 생성해줍니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-07.png)
+
+```shell
+Host <호스트 별칭>
+  HostName <아이피 혹은 도메인>
+  User <계정명>
+  IdentityFile <ssh 키파일 경로>
+```
+
+위의 양식대로 입력해줍니다('<>' 기호는 제거해주세요). 그 다음엔 `ssh <호스트 별칭>` 으로 접속이 가능합니다. 키를 저장하지 않았다면 계정의 비밀번호를 입력 후 접속할 수 있습니다.
+
+# 2. 정적 페이지 배포
+
+HTTP 서버를 사용해서 매우 간단한 정적 HTML 페이지를 응답하는 서버를 설정하겠습니다. HTTP 서버는 nginx 를 사용합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-08.png)
+
+테스트용 이므로 아주 간단한 HTML 문서를 작성했습니다. 파이에서 바로 작성해도 되고 다른 컴퓨터에서 작성 후 FTP, 이동식 미디어장치 혹은 scp 명령 등으로
+파일을 서버에 복사해줍니다.
+
+> scp(secure copy) 사용법은 아래와 같습니다. 위에서 ssh 호스트 설정을 하셨다면 그 호스트별칭을 사용할 수 있습니다.
+> 원격지의 복사 경로는 절대경로를 사용해주시고, 홈을 의미하는 '~' 는 사용하지 말아주세요.
+>
+> `scp ./file your_account@192.168.0.8:/home/your_account/`
+> 
+> `scp ./file pi:/home/your_account/`
+
+그 다음으로 엔진엑스(Nginx)가 설치되어 있는지 확인해봅니다. `nginx -v` 명령을 실행합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-09.png)
+
+위와 같은 결과가 나온다면 엔진엑스가 설치되어 있지 않은겁니다. `sudo apt install nginx` 를 실행하여 엔진엑스를 설치해줍니다.
+
