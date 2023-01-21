@@ -1,6 +1,6 @@
 ---
 title: 집에있는 컴퓨터로 웹 서비스 배포 준비하기
-published: false
+published: true
 tags: network, nginx
 ---
 
@@ -155,4 +155,181 @@ HTTP 서버를 사용해서 매우 간단한 정적 HTML 페이지를 응답하�
 응답을 하기 위해선 고유한 public IP 가 필요합니다. 가정집에선 대부분 유동 아이피를 사용하지만 일단은 그 아이피를 그대로 사용하겠습니다.
 
 현재 우리집에 할당된(ISP 혹은 지역사업자가 할당해준) 아이피를 확인하기 위해서 서버에서 `curl ifconfig.me` 명령어를 실행합니다.
-혹은 구글에서 'my public ip' 로 검색한 결과의 사이트에서 나의 퍼블릭 아이피를 알 수 있습니다.
+혹은 구글에서 'my public ip' 로 검색한 결과의 사이트에 접속하거나 공유기의 관리자로 로그인하면 알 수 있습니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-16.png)
+
+포트포워딩 설정을 위해서 공유기 설정에 접속합니다. 아이피타임 공유기의 경우 '고급설정 -> NAT/라우터 관리 -> 포트포워드 설정' 으로 이동합니다.
+내부 IP주소에 서버의 서브넷 아이피를 기입합니다. HTTP 는 TCP 프로토콜을 사용하므로 'TCP' 를 선택하고 외부포트와 내부 포트 모두 80으로 설정합니다.
+내부 포트를 80으로 설정하는 이유는 2.2 파트에서 엔진엑스의 프론트 서버를 80번 포트를 리스닝 하도록 설정했기 때문입니다.
+
+이 규칙을 적용하고 저장을 합니다. 그리고 웹 브라우저를 열고 위에서 확인한 우리집의 public IP 로 접속합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-17.png)
+
+저는 처음에 이런 URI 로 리다이렉트 되며 엔진엑스가 파일을 찾을 수 없다는 404 에러를 응답했습니다.
+이런 경우가 발생한다면 브라우저의 캐시를 비우고 새로고침을 해줍니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-18.png)
+
+각자 작성한 정적 HTML 페이지가 잘 보인다면 정상적인 요청과 응답이 이뤄진겁니다. 이제 외부망에서도 우리집의 공용 아이피로 HTTP 요청시 엔진엑스가
+적절한 응답을 하게 됩니다.
+
+# 3. 백엔드 배포
+
+이제 데모 역할을 해줄 매우 간단한 백엔드 웹 어플리케이션 서버를 만들어서 서버에서 실행해줍니다. 저는 코틀린의 `Ktor` 웹 프레임워크를 사용했습니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-19.png)
+
+내부적으로 `Netty` 서버를 사용하는 이 백엔드 API 서버는 8080 포트에 바인딩 됩니다.
+루트 경로에 GET 요청시 마다 'hello, world!' 혹은 'good bye, world!' 를 JSON 형식에 담아 응답합니다.
+CORS 호스트 설정은 도메인 연결 후 하도록 하겠습니다.
+
+> 'good bye, world!' 는 C 언어의 창시자이자 UNIX 를 개발한 핵심 프로그래머 중 한명이었던 데니스 리치가 2011년 10월 12일 세상을 떠났을때,
+> 그를 추모하기 위해 사용된 태그입니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-20.png)
+
+홈서버에서 백엔드 API 서버를 가동해줍니다. `netstat -lptn` 명령을 실행하여 백엔드 서버가 정상적으로 리스닝 중인지 확인합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-21.png)
+
+프론트 정적페이지 경우와 마찬가지로 8080 포트를 포워딩하여 홈서버의 8080 포트로 연결되도록 설정해줍니다. 저장을 누르고 나옵니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-22.png)
+
+이제 웹 브라우저에서 '나의아이피:8080' 으로 접속해봅니다. 제가 작성한대로 응답결과를 잘 확인할 수 있습니다.
+
+> 위의 사진과 같이 웹 브라우저에서 JSON 형식을 보기 쉽게 만들어주는 'JSON Viewer' 같은 크롬 확장프로그램을 사용하면 편합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-23.png)
+
+프론트 파일을 위와 같이 수정했습니다. Fetch API 를 사용하여 백엔드에서 받은 데이터를 간단하게 보여줍니다.(사실 프론트엔드를 잘 모릅니다..)
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-24.png)
+
+이제 웹브라우저에서 8080 포트번호를 지우고 80 포트로 접속하여 프론트 페이지를 요청해봅니다. API 서버와 통신이 잘 되고 있음을 확인합니다.
+
+# 4. 도메인 설정
+
+이제 우리 서비스를 위한 도메인을 구매 후 연결하겠습니다. 저는 GoDaddy 라는 서비스를 사용했습니다. 이 사이트 외에도 국내외 다른 서비스들이 있습니다.
+무엇을 사용하든 상관은 없습니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-25.png)
+
+제 이름과 비슷한 도메인을 하나 정했는데 도대체 무슨 이유로 이게 '전 세계적 인기 항목' 인지는 모르겠습니다. 아마도 상술이겠지요.
+그리고 탑레벨 도메인(TLD)이 com 인게 왜 최고의 솔루션인지도 모르겠습니다.
+com 은 초기에 만들어진 전통적인 도메인이긴 하지만 그것이 왜 최고로 여겨지는진 모르겠습니다. 이것도 아마 상술이겠지요. 아무튼 가격이 싸니 구매해봅니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-26.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-27.png)
+
+CNAME 별칭 레코드를 하나 추가합니다. 추후에 백엔드 API 프록시 서버 용도로 사용됩니다. 값은 구매한 도메인 그대로 입력합니다.
+com 뒤에 마침표 . 은 루트 도메인을 의미합니다. 그리고 A 레코드의 값을 우리의 public IP 로 수정합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-28.png)
+
+잠시후에 웹브라우저에서 구입한 도메인으로 접속을 해봅니다. DNS 서버에 우리가 구입한 도메인과 수정한 값이 반영되는데 시간이 소요될 수 도 있습니다.
+DNS 서버들은 도메인과 매핑된 아이피 주소들을 기록하는 테이블을 캐싱합니다. 그 캐시 값이 갱신 될 때까지 소요되는 시간입니다.
+
+# 5. 인증서 등록 및 리버스 프록시 설정
+
+4번 항목까지만 진행되어도 서비스를 배포하고 사용 자체는(?) 할 수 있습니다. 하지만 우리 서비스에 접속할때마다 사용자들은 브라우저의 경고를 보게 됩니다.
+민감한 정보가 암호화되지 않은채로 공용망(인터넷)을 자유롭게 떠다니는게 보안상 좋을리 없습니다.
+
+HTTPS 프로토콜은 핸드셰이크 과정에서 암복호화에 사용될 키를 교환하며, 연결이 성립 후 이동되는 패킷은 해당 키로 암호화되어 전송됩니다.
+HTTPS 프로토콜을 사용하는 서비스로 설정해보겠습니다. 
+
+## 5.1 certbot 준비
+
+HTTPS 연결 수립시 사용될 키는 우리가 직접 설정할 수도 있습니다. 하지만 인증서는 HTTPS 연결 시 사용되는 키를 공인된 기관에서 보증하는 것입니다.
+인증서를 받기 위해선 공인된 기관에서 구입을 해야합니다. 하지만 우린 돈이 없으므로 공짜로 인증서를 발급해주는 서비스를 사용하겠습니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-29.png)
+
+구글에서 'certbot' 을 검색 후 해당 사이트에 접속합니다. 그럼 위와 같은 페이지를 볼 수 있는데 가운데쯤 있는 선택창에서 Nginx 와 Ubuntu 를
+선택하면 다음 안내페이지로 이동합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-30.png)
+
+'snapd' 를 설치하라고 하는데 우분투 20버전 배포판에는 이미 설치되어 있습니다. 'snapd' 설치를 확인 하신 후 3, 5, 6번의 명령어들을 차례로 실행합니다.
+
+## 5.2 Nginx 가상 호스트 추가
+
+다음으로 프론트를 위한 nginx 가상 호스트를 추가하겠습니다. 이 엔진엑스 설정을 바탕으로 certbot 이 자동으로 인증서를 발급하기 위한 프로세스를 수행 해줍니다.
+`/etc/nginx/sites-available` 경로에 다음과 같은 파일을 아무 이름으로(예제에서는 front)생성해줍니다.
+
+```
+server {
+    listen 80;
+    server_name your_domain;
+    root /home/your_account/app/front;
+    index index.html;
+}
+```
+
+`server_name` 필드에 여러분의 도메인을 입력해줍니다. 그외 사항은 기존의 default 설정 파일과 큰 차이는 없습니다.
+저장 후 이 설정파일을 엔진엑스가 사용하도록 아래처럼 `/etc/nginx/sites-enable` 경로에 심볼릭 링크를 생성해줍니다. 
+
+> `sudo ln -s /etc/nginx/sites-available/front /etc/nginx/sites-enable/`
+
+그리고 잊지말고 `sudo nginx -s reload` 를 실행해줍니다.
+
+## 5.3 인증서 발급
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-31.png)
+
+`sudo certbot --nginx` 명령어를 실행합니다. 그럼 위의 사진처럼 1: 도메인명 항목을 볼 수 있습니다.
+이 항목은 방금 작성한 엔진엑스 가상 호스트의 `server_name` 에 입력한 도메인명을 보여주고 있습니다.
+1번을 선택 후 진행하면 성공적으로 인증서를 발급 받게 됩니다.
+
+> 만약 인증서 발급에 실패한다면 다음 사항을 확인해봅니다.
+> 
+> 1. 엔진엑스 가상호스트 파일 작성 후, `sites-enable` 디렉터리에 심링크를 만들지 않았다.
+> 2. 새로 구입한 도메인이 아직 DNS 서버에 반영이 되지 않았다.
+> 3. 가상 호스트 설정 파일에 오타가 있다.
+> 4. 80번 포트가 오픈되어있지 않거나 포트포워딩이 되어있지 않다.
+> 
+> 저는 주로 1번을 자주 깜빡하는 실수가 잦았습니다.
+
+## 5.4 프록시 API 서버 설정
+
+이제 인증서가 잘 적용되었는지 확인해보겠습니다. 우선은 다시 공유기 설정을 열어서 HTTPS 프로토콜이 사용하는 포트 443번을 포워딩해야합니다.
+설정 방법은 이전 방식과 같습니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-32.png)
+
+웹 브라우저에서 우리 도메인으로 https:// 를 사용해서 접속하면 인증서가 잘 적용된 것을 확인 할 수 있습니다. 하지만 프론트에서 백엔드로의 ajax
+통신은 위 콘솔 스크린샷과 같이 안됩니다. 이를 해결하기 위해 엔진엑스의 리버스 프록시 기능을 사용하겠습니다.
+
+`/etc/nginx/sites-available` 경로에 다음과 같은 파일을 아무 이름으로(예제에서는 back)생성해줍니다.
+
+```
+server {
+    server_name api.your_domain;
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+    }
+}
+```
+
+`server_name` 필드에서는 이전의 4번 항목에서, DNS 설정 중에 API 서버를 위해 미리 추가했었던 CNAME 레코드를 기입합니다.
+그리고 `location /` 블록에 `proxy_pass http://127.0.0.1:8080` 설정을 추가합니다.
+엔진엑스가 api.your_domain 경로로 온 요청을 가로채 헤더를 수정 후 다시 백엔드 서버로 해당 요청을 전달합니다.
+
+이전 프론트 가상 호스트 설정때와 마찬가지로 `sites-enable` 에 심볼릭 링크를 생성 해준 뒤 `sudo nginx -s reload` 를 실행하여 엔진엑스를 재시작합니다.
+그리고 `sudo certbot --nginx` 명령을 실행 후 새로 추가한 백엔드 도메인을 선택하고 인증서 발급을 수행합니다.
+마지막으로 프론트 페이지의 `Fetch API` 에서 기존의 'localhost:8080' 을 'api.your_domain' 으로 수정합니다.
+
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-34.png)
+
+최종적으로 도메인과 인증서가 연결된 상태의 데모 서비스가 정상적으로 작동됨을 확인 할 수 있습니다.
+
+## 6. 마무리
+
+공유기의 포트포워드 설정에서 이제 불필요한 80번과 8080번 포워딩 설정을 삭제할 수 있습니다.
+그리고 기존의 백엔드 소스에서 CORS 허용 호스트에 우리 도메인만을 지정하여 재배포 합니다.
+
+이렇게 해서 우리집에서 홈서버로 개인 프로젝트를 서비스하기 위한 기본적인 준비사항을 알아보았습니다.
+본문에 틀린 내용이 있거나 미흡한 부분이 있다면 댓글로 알려주시면 감사하겠습니다!
+
