@@ -11,7 +11,7 @@ tags: network, nginx
 
 # 1. 서버 준비
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-01.jpeg)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-01.jpeg)
 
 ## 1.1 우분투 설치
 
@@ -33,18 +33,18 @@ tags: network, nginx
 > 
 > `access-points` 아래 뎁스의 따옴표에 와이파이 이름을 입력합니다. 그리고 그 다음 뎁스의 `password` 항목에 와이파이 비밀번호를 입력합니다.
 > 두 경우 모두 따옴표로 감싸야합니다. 또한 파일포맷이 `YAML` 이므로, 들여쓰기를 반드시 지켜줘야 합니다.
-> ![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-02.png)
+> ![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-02.png)
 
 저는 아이피타임 공유기를 사용중입니다. 공유기가 DHCP 서버 역할을 하므로, 방금 연결된 기기에 알맞은 서브넷 IP 를 할당했을 겁니다.
 아이피타임은 브라우저로 접속할 수 있는 GUI 설정을 지원합니다. 웹 브라우저를 열고 'http://192.168.0.1' 으로 접속하여 관리자 계정으로
 로그인 합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-03.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-03.png)
 
 메뉴 '고급 설정 -> 네트워크 관리 -> 내부 네트워크 설정' 에서 방금 연결한 파이의 아이피를 확인 할 수 있습니다.
 저는 192.168.0.8 를 할당 받았습니다. 아이피 옆에 있는 데이터는 MAC 주소입니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-04.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-04.png)
 
 혹은 위와 같이 `ifconfig` 명령을 통해 파이 터미널에서 아이피를 직접 확인하실 수 도 있습니다.
 
@@ -53,7 +53,7 @@ tags: network, nginx
 만약 라즈베리 파이에 모니터가 연결되어 있어서 항상 파이의 터미널을 사용할 수 있다면 ssh(secure shell) 사용은 필수는 아닙니다.
 저는 파이는 전원과 와이파이만 연결되어있고 별도의 모니터는 연결되어 있지 않으므로, ssh 접속을 사용하겠습니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-05.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-05.png)
 
 먼저 파이에서 `systemctl status ssh` 명령을 사용하여 ssh 데몬이 정상적으로 실행 중인지 확인합니다. 대부분은 기본적으로 부팅시
 ssh 서비스가 실행되지만 어떤 배포판에서는 기본적으로 비활성화 되어 있는 경우를 봤습니다.
@@ -63,13 +63,13 @@ ssh 서비스가 실행되지만 어떤 배포판에서는 기본적으로 비�
 `ssh <your_account>@192.168.0.8` 명령으로 접속합니다. <your_account> 부분을 여러분의 우분투 계정이름으로 바꿔주세요.
 마찬가지로 아이피도 여러분의 서버의 서브넷 아이피로 바꿔주십시오. 접속시 해당 계정의 비밀번호를 입력합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-06.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-06.png)
 
 ssh 로 접속하였습니다. 마지막 줄의 from 192.168.0.5 는 저의 데스크탑 컴퓨터의 서브넷 아이피입니다.
 다음으로 매번 'ssh 계정@호스트' 를 타이핑 하기 귀찬으니 ssh 설정파일에 호스트를 등록하겠습니다.
 ~/.ssh/ 로 이동해서 'config' 파일이 있다면 수정하고 없다면 생성해줍니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-07.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-07.png)
 
 ```shell
 Host <호스트 별칭>
@@ -86,7 +86,7 @@ Host <호스트 별칭>
 
 HTTP 서버를 사용해서 매우 간단한 정적 HTML 페이지를 응답하는 서버를 설정하겠습니다. HTTP 서버는 nginx 를 사용합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-08.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-08.png)
 
 테스트용 이므로 아주 간단한 HTML 문서를 작성했습니다(사실 프론트는 잘 모릅니다). 파이에서 바로 작성해도 되고 다른 컴퓨터에서 작성 후 FTP, 이동식 미디어장치 혹은 scp 명령 등으로
 파일을 서버에 복사해줍니다.
@@ -102,25 +102,25 @@ HTTP 서버를 사용해서 매우 간단한 정적 HTML 페이지를 응답하�
 
 그 다음으로 엔진엑스(Nginx)가 설치되어 있는지 확인해봅니다. `nginx -v` 명령을 실행합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-09.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-09.png)
 
 위와 같은 결과가 나온다면 엔진엑스가 설치되어 있지 않은겁니다. `sudo apt install nginx` 를 실행하여 엔진엑스를 설치해줍니다.
 혹은 엔진엑스 공식 사이트의 설치 가이드를 따라서 원하시는 특정 버전을 설치해주시면 됩니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-11.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-11.png)
 
 설치가 정상적으로 완료되었거나 이미 설치되어 있었다면 다음과 같이 엔진엑스 버전이 정상적으로 출력됩니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-12.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-12.png)
 
 엔진엑스는 `/etc/nginx` 경로에 있습니다. `sites-available` 과 `sites-enable` 에 가상 호스트 설정을 추가하여 우리가 원하는
 프론트 서버와 백엔드 서버를 설정할 수 있습니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-13.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-13.png)
 
 `sites-available` 에 위치한 `default` 파일을 아무 에디터로 열어봅니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-14.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-14.png)
 
 'server {...}' 안의 정보로 엔진엑스 가상 호스트를 생성할 수 있습니다.
 22행의 `listen 80 default_server;` 을 보시면 이 서버는 80번 포트에 바인딩되는 것을 알 수 있습니다.
@@ -129,7 +129,7 @@ HTTP 서버를 사용해서 매우 간단한 정적 HTML 페이지를 응답하�
 
 따라서 우리가 작성한 'index.html' 파일을 저 경로에 복사해도 되고, 아니면 우리가 원하는 경로를 `root` 에 적어주시면 됩니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-15.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-15.png)
 
 위의 예시는 `root` 설정을 변경한 예시입니다. 여러분이 원하는 경로를 입력해주세요.
 
@@ -157,7 +157,7 @@ HTTP 서버를 사용해서 매우 간단한 정적 HTML 페이지를 응답하�
 현재 우리집에 할당된(ISP 혹은 지역사업자가 할당해준) 아이피를 확인하기 위해서 서버에서 `curl ifconfig.me` 명령어를 실행합니다.
 혹은 구글에서 'my public ip' 로 검색한 결과의 사이트에 접속하거나 공유기의 관리자로 로그인하면 알 수 있습니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-16.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-16.png)
 
 포트포워딩 설정을 위해서 공유기 설정에 접속합니다. 아이피타임 공유기의 경우 '고급설정 -> NAT/라우터 관리 -> 포트포워드 설정' 으로 이동합니다.
 내부 IP주소에 서버의 서브넷 아이피를 기입합니다. HTTP 는 TCP 프로토콜을 사용하므로 'TCP' 를 선택하고 외부포트와 내부 포트 모두 80으로 설정합니다.
@@ -165,12 +165,12 @@ HTTP 서버를 사용해서 매우 간단한 정적 HTML 페이지를 응답하�
 
 이 규칙을 적용하고 저장을 합니다. 그리고 웹 브라우저를 열고 위에서 확인한 우리집의 public IP 로 접속합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-17.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-17.png)
 
 저는 처음에 이런 URI 로 리다이렉트 되며 엔진엑스가 파일을 찾을 수 없다는 404 에러를 응답했습니다.
 이런 경우가 발생한다면 브라우저의 캐시를 비우고 새로고침을 해줍니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-18.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-18.png)
 
 각자 작성한 정적 HTML 페이지가 잘 보인다면 정상적인 요청과 응답이 이뤄진겁니다. 이제 외부망에서도 우리집의 공용 아이피로 HTTP 요청시 엔진엑스가
 적절한 응답을 하게 됩니다.
@@ -179,7 +179,7 @@ HTTP 서버를 사용해서 매우 간단한 정적 HTML 페이지를 응답하�
 
 이제 데모 역할을 해줄 매우 간단한 백엔드 웹 어플리케이션 서버를 만들어서 서버에서 실행해줍니다. 저는 코틀린의 `Ktor` 웹 프레임워크를 사용했습니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-19.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-19.png)
 
 내부적으로 `Netty` 서버를 사용하는 이 백엔드 API 서버는 8080 포트에 바인딩 됩니다.
 루트 경로에 GET 요청시 마다 'hello, world!' 혹은 'good bye, world!' 를 JSON 형식에 담아 응답합니다.
@@ -188,25 +188,25 @@ CORS 호스트 설정은 도메인 연결 후 하도록 하겠습니다.
 > 'good bye, world!' 는 C 언어의 창시자이자 UNIX 를 개발한 핵심 프로그래머 중 한명이었던 데니스 리치가 2011년 10월 12일 세상을 떠났을때,
 > 그를 추모하기 위해 사용된 태그입니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-20.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-20.png)
 
 홈서버에서 백엔드 API 서버를 가동해줍니다. `netstat -lptn` 명령을 실행하여 백엔드 서버가 정상적으로 리스닝 중인지 확인합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-21.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-21.png)
 
 프론트 정적페이지 경우와 마찬가지로 8080 포트를 포워딩하여 홈서버의 8080 포트로 연결되도록 설정해줍니다. 저장을 누르고 나옵니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-22.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-22.png)
 
 이제 웹 브라우저에서 '나의아이피:8080' 으로 접속해봅니다. 제가 작성한대로 응답결과를 잘 확인할 수 있습니다.
 
 > 위의 사진과 같이 웹 브라우저에서 JSON 형식을 보기 쉽게 만들어주는 'JSON Viewer' 같은 크롬 확장프로그램을 사용하면 편합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-23.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-23.png)
 
 프론트 파일을 위와 같이 수정했습니다. Fetch API 를 사용하여 백엔드에서 받은 데이터를 간단하게 보여줍니다.(사실 프론트엔드를 잘 모릅니다..)
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-24.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-24.png)
 
 이제 웹브라우저에서 8080 포트번호를 지우고 80 포트로 접속하여 프론트 페이지를 요청해봅니다. API 서버와 통신이 잘 되고 있음을 확인합니다.
 
@@ -215,19 +215,19 @@ CORS 호스트 설정은 도메인 연결 후 하도록 하겠습니다.
 이제 우리 서비스를 위한 도메인을 구매 후 연결하겠습니다. 저는 GoDaddy 라는 서비스를 사용했습니다. 이 사이트 외에도 국내외 다른 서비스들이 있습니다.
 무엇을 사용하든 상관은 없습니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-25.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-25.png)
 
 제 이름과 비슷한 도메인을 하나 정했는데 도대체 무슨 이유로 이게 '전 세계적 인기 항목' 인지는 모르겠습니다. 아마도 상술이겠지요.
 그리고 탑레벨 도메인(TLD)이 com 인게 왜 최고의 솔루션인지도 모르겠습니다.
 com 은 초기에 만들어진 전통적인 도메인이긴 하지만 그것이 왜 최고로 여겨지는진 모르겠습니다. 이것도 아마 상술이겠지요. 아무튼 가격이 싸니 구매해봅니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-26.png)
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-27.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-26.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-27.png)
 
 CNAME 별칭 레코드를 하나 추가합니다. 추후에 백엔드 API 프록시 서버 용도로 사용됩니다. 값은 구매한 도메인 그대로 입력합니다.
 com 뒤에 마침표 . 은 루트 도메인을 의미합니다. 그리고 A 레코드의 값을 우리의 public IP 로 수정합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-28.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-28.png)
 
 잠시후에 웹브라우저에서 구입한 도메인으로 접속을 해봅니다. DNS 서버에 우리가 구입한 도메인과 수정한 값이 반영되는데 시간이 소요될 수 도 있습니다.
 DNS 서버들은 도메인과 매핑된 아이피 주소들을 기록하는 테이블을 캐싱합니다. 그 캐시 값이 갱신 될 때까지 소요되는 시간입니다.
@@ -245,12 +245,12 @@ HTTPS 프로토콜을 사용하는 서비스로 설정해보겠습니다.
 HTTPS 연결 수립시 사용될 키는 우리가 직접 설정할 수도 있습니다. 하지만 인증서는 HTTPS 연결 시 사용되는 키를 공인된 기관에서 보증하는 것입니다.
 인증서를 받기 위해선 공인된 기관에서 구입을 해야합니다. 하지만 우린 돈이 없으므로 공짜로 인증서를 발급해주는 서비스를 사용하겠습니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-29.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-29.png)
 
 구글에서 'certbot' 을 검색 후 해당 사이트에 접속합니다. 그럼 위와 같은 페이지를 볼 수 있는데 가운데쯤 있는 선택창에서 Nginx 와 Ubuntu 를
 선택하면 다음 안내페이지로 이동합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-30.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-30.png)
 
 'snapd' 를 설치하라고 하는데 우분투 20버전 배포판에는 이미 설치되어 있습니다. 'snapd' 설치를 확인 하신 후 3, 5, 6번의 명령어들을 차례로 실행합니다.
 
@@ -277,7 +277,7 @@ server {
 
 ## 5.3 인증서 발급
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-31.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-31.png)
 
 `sudo certbot --nginx` 명령어를 실행합니다. 그럼 위의 사진처럼 1: 도메인명 항목을 볼 수 있습니다.
 이 항목은 방금 작성한 엔진엑스 가상 호스트의 `server_name` 에 입력한 도메인명을 보여주고 있습니다.
@@ -297,7 +297,7 @@ server {
 이제 인증서가 잘 적용되었는지 확인해보겠습니다. 우선은 다시 공유기 설정을 열어서 HTTPS 프로토콜이 사용하는 포트 443번을 포워딩해야합니다.
 설정 방법은 이전 방식과 같습니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-32.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-32.png)
 
 웹 브라우저에서 우리 도메인으로 https:// 를 사용해서 접속하면 인증서가 잘 적용된 것을 확인 할 수 있습니다. 하지만 프론트에서 백엔드로의 ajax
 통신은 위 콘솔 스크린샷과 같이 안됩니다. 이를 해결하기 위해 엔진엑스의 리버스 프록시 기능을 사용하겠습니다.
@@ -321,7 +321,7 @@ server {
 그리고 `sudo certbot --nginx` 명령을 실행 후 새로 추가한 백엔드 도메인을 선택하고 인증서 발급을 수행합니다.
 마지막으로 프론트 페이지의 `Fetch API` 에서 기존의 'localhost:8080' 을 'api.your_domain' 으로 수정합니다.
 
-![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/_posts/home-server-34.png)
+![](https://raw.githubusercontent.com/S1000f/S1000f.github.io/master/docs/images/home-server-34.png)
 
 최종적으로 도메인과 인증서가 연결된 상태의 데모 서비스가 정상적으로 작동됨을 확인 할 수 있습니다.
 
