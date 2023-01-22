@@ -1,7 +1,7 @@
 ---
-title: [Spring] Scheduler
+title: Spring Scheduler
 published: false
-tags: Spring
+tags: spring
 ---
 
 ```java
