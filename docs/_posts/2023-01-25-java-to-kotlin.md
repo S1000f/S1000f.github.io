@@ -169,5 +169,86 @@ fun main() {
 코틀린은 대부분의 경우 변수의 타입을 추론할 수 있습니다. 위 예제에서는 컴파일러가 'mut' 와 'imut' 변수의 타입을 `String` 으로 추론합니다.
 
 ## 1.7 변경 가능 혹은 변경 불가능한 컬렉션
+```java
+  public static void main(String[] args){
+    Map<Integer, String> map=new HashMap<>();
+    Map<Integer, String> map1=Collections.unmodifiableMap(map);
+
+    map.put(1,"one");
+    map1.put(1,"one"); // exception
+  }
+```
+```kotlin
+fun main() {
+    val map: MutableMap<Int, String> = mutableMapOf()
+    val map1: Map<Int, String> = mapOf()
+    
+    map.put(1, "one")
+    map1.put(1, "one") // error
+}
+```
+코틀린은 변경가능한 컬렉션과 변경 불가능한 컬렉션이 완전히 분리되어 있습니다.
+
+자바에서 변경불가능한 컬렉션을 생성하려면 `Collections` 클래스에 있는 'unmodifiable...'로 시작하는 정적 팩토리 메소드를 사용해야 합니다.
+이 메소드들이 반환하는 타입은 각 컬렉션 타입(List, Set, Map 등)의 인터페이스 입니다. 변경불가능한 컬렉션을 위한 별도의 인터페이스를 제공하지 않습니다.
+자바 코드에서 `map1.put(1, "one")`을 호출하면 `UnsupportedOperationException`이 발생합니다.
+
+반면에 코틀린은 변경가능한 컬렉션 타입을 위한 별도의 인터페이스를 제공합니다.
+위 코틀린 코드에서 `map1.put(1, "one")`부분은 예외를 발생시키는게 아니라 애초에 컴파일 자체가 불가능합니다.
+왜냐하면 `MutableMap`인터페이스에는 `put()`이라는 행위 자체를 정의하지 않았기 때문입니다.
 
 ## 1.8 문자열 편의기능
+```java
+  public String log(String prefix, String message) {
+    return Instant.now() + ":" + prefix + ": " + message;
+  }
+```
+```kotlin
+fun log(prefix: String, message: String): String {
+    return "${Instant.now()}:$prefix: $message"
+}
+```
+코틀린은 문자열 템플릿을 지원합니다.
+문자열 안에서 '${}' 을 사용해서 변수나 표현식의 값을 바로 사용할 수 있습니다.
+
+```java
+  public static void main(String[] args) {
+    String greeting = "hi";
+    String body = "<body>"
+    + "<p>" + greeting + "</p>"
+    + "</body>";
+
+    String json = 
+        "{\"jsonrpc\":\"2.0\",\"method\":\"subtract\",\"params\":[42,23],\"id\":1}";
+  }
+```
+```kotlin
+fun main() {
+    val greeting = "hi"
+    val body = """
+        <body>
+          <p>$greeting</p>
+        </body>
+    """.trimIndent()
+
+    val json = """{"jsonrpc":"2.0","method":"subtract","params":[42,23],"id":1}"""
+}
+```
+
+삼중따옴표(""")을 사용하면 문자열안에서 따옴표(")을 이스케이프 하지 않아서 편합니다. 또한 여러줄 문자열도 좀 더 가시성 좋게 작성할 수 있습니다.
+
+# 2. 조금 더 살펴보기
+
+## 2.1 생성자와 data class
+
+## 2.2 확장함수
+
+## 2.3 null-safe 연산자
+
+## 2.4 표현식 함수
+
+## 2.5 이터레이션
+
+## 2.6 영역함수: let, apply, also, with
+
+## 2.7 컬렉션의 확장함수
