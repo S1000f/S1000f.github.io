@@ -241,14 +241,76 @@ fun main() {
 
 ## 2.1 생성자와 data class
 
+항목 1.1 에서 보았던 클래스 선언을 좀 더 간략하게 만들어보겠습니다.
+
+```kotlin
+class UserDto constructor(idx: Long) {
+    val idx: Long
+    init {
+        this.idx = idx
+    }
+}
+```
+클래스 내부에 있던 생성자를 클래스 이름 옆에 지정할 수 있습니다. 이 생성자는 주 생성자(primary constructor)라고 부릅니다.
+클래스 내부의 `init`블록에서 프로퍼티 'idx' 를 초기화 해줍니다.
+
+```kotlin
+class UserDto(idx: Long) {
+    val idx = idx
+}
+```
+
+주 생성자앞에 `private` 이나 `protected` 같은 접근제어자가 없다면 `constructor` 키워드를 생략할 수 있습니다.
+또한 생성자의 매개변수로 프로퍼티로 바로 초기화 할 수 있습니다. 파라미터명 앞의 언더바(_)는 파라미터를 프로퍼티로 바로 초기화 할 때 사용합니다.
+
+```kotlin
+class UserDto(val idx: Long)
+```
+만약 주 생성자 파라미터로 프로퍼티를 바로 초기화 한다면, 주 생성자 파라미터앞에 `val` 키워드를 붙여 간략화 할 수 있습니다.
+그리고 본문이 없는 클래스는 중괄호를 생략할 수 있습니다.
+
+이상의 내용들은 만약 '인텔리제이 IDEA' 를 사용한다면 IDE 가 리펙터링 힌트를 주므로 금방 익숙해집니다.
+
+```kotlin
+data class UserDto(val idx: Long)
+```
+특정 값을 담고 그 값으로 정의되는 객체를 데이터 클래스 혹은 DTO(Data Transfer Object)라고 부릅니다.
+데이터 클래스들은 내부의 값으로 동치관계나 대소관계를 나타내는게 보통입니다.
+코틀린에서 `data class` 키워드를 사용하면 자동으로 해당 클래스의 `equals()`, `hashCode()`, `toString()` 메소드를 오버라이드 해줍니다.
+자바 라이브러리 롬복의 `@Data`어노테이션을 생각하시면 됩니다.
+
 ## 2.2 확장함수
 
+```kotlin
+fun BigInteger.toBytesNoSignBit(): ByteArray {
+    var array = this.toByteArray()
+    if (array[0].toInt() == 0) {
+        val tmp = ByteArray(array.size - 1)
+        System.arraycopy(array, 1, tmp, 0, tmp.size)
+        array = tmp
+    }
+    return array
+}
+```
+```kotlin
+fun main() {
+    val big = BigInteger("255")
+    val bytes = big.toBytesNoSignBit()
+}
+```
+
+항목 1.2 의 함수를 확장함수로 재정의 하였습니다.
+우리는 자바의 `BigInteger` 클래스를 직접 확장하지 않았지만, 확장함수를 사용하면 해당 클래스의 멤버 메소드인 것처럼 함수를 호출할 수 있습니다.
+
+위의 확장함수 이름 `BigInteger.toBytesNoSignBit()` 중에서 `BigInteger` 부분을 '수신 객체 타입(receiver type)'이라고 부릅니다.
+확장함수 블록안에서 `this` 키워드를 사용하면 수신 객체를 참조할 수 있습니다.
+
 ## 2.3 null-safe 연산자
+
+
 
 ## 2.4 표현식 함수
 
 ## 2.5 이터레이션
 
 ## 2.6 영역함수: let, apply, also, with
-
-## 2.7 컬렉션의 확장함수
