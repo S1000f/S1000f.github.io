@@ -1,5 +1,5 @@
 ---
-title: 자바와 코틀린의 차이점 요약
+title: 자바 1.8 과 코틀린 요약
 published: false
 tags: java, kotlin
 ---
@@ -306,11 +306,71 @@ fun main() {
 확장함수 블록안에서 `this` 키워드를 사용하면 수신 객체를 참조할 수 있습니다.
 
 ## 2.3 null-safe 연산자
+```kotlin
+fun main() {
+    val placeToGo: String = stringOrNull()
+        ?.substring(0..3)
+        ?.uppercase() ?: "HEAVEN"
+    
+    println(placeToGo)
+}
 
+fun stringOrNull(): String? {
+    return if (Random.nextBoolean()) "hello" else null
+}
+```
+항목 1.3 에서 보았던 'stringOrNull()' 함수는 널이 가능한 `String?`타입을 반환합니다. 널이 가능한 타입은 자바의 `Optional`클래스와 유사한 방법으로 처리가능합니다.
 
+`?.` 연산자는 해당 참조변수가 널을 참조하지 않는 경우에만 연산을 수행합니다. 위 코드의 `?.` 체이닝은 함수가 문자열 'hello' 를 반환한 경우에만 수행됩니다.
+체이닝 마지막에 있는 `?:` 는 엘비스 연산자로 불리는 것으로, 반환값이 널일 경우 해당 연산자 우측의 값을 변수에 대입합니다. 결국 `Optional.orElse()`와 역할이 같습니다.
+
+`Optional`은 익셉션 발생 리스크를 감수하며 널 체크없이 `get()`메소드를 호출할 수 있습니다. 하지만 코틀린에서는 불가능합니다.
+만약 위 코드에서 엘비스 연산자 `?:`을 제거한다면 변수 'placeToGo' 의 타입은 `String`이 아니라 `String?`으로 강제됩니다.
 
 ## 2.4 표현식 함수
+```kotlin
+fun stringToInt(s: String) = try {
+    s.toInt()
+} catch (e: NumberFormatException) {
+    e.printStackTrace()
+    0
+}
+```
+항목 1.4 의 함수를 위와 같이 표현식 함수로 다시 쓸 수 있습니다.
+표현식 함수는 함수의 본문에 단 하나의 표현식만 있는 경우로써, 함수 본문 블록과 반환타입 선언을 생략할 수 있습니다.
+
+위 함수는 하나의 표현식이지만 `try`와 `catch`의 두 개의 블록이 있습니다. 하나의 블록에서 가장 마지막에 위치한 표현식의 값이 그 블록의 반환값이 됩니다.
+따라서 `catch` 블록에서는 가장 마지막 표현식인 '0' 의 값이 `catch`블록의 반환값이 됩니다.
 
 ## 2.5 이터레이션
+```kotlin
+fun main() {
+    for (i in 0..10) println(i)
+    for (i in 0 until 10) println(i)
+    for (i in 10 downTo 0) println(i)
+    for (i in 10 downTo 0 step 2) println(i)
+}
+```
+코틀린에는 `for (;;)` 형식의 루프가 없습니다. 만약 별도의 인덱스가 사용되는 루프가 필요하다면 위와 같이 범위를 사용하면 됩니다.
+
+```kotlin
+fun main() {
+    val map = sortedMapOf(1 to "one", 3 to "three", 2 to "two")
+    for ((key, value) in map) {
+        println("$key, $value")
+    }
+
+    for ((i, entry) in map.asIterable().withIndex()) {
+        println("$i: ${entry.key}:${entry.value}")
+    }
+}
+```
+맵에 대한 이터레이션은 구조분해를 사용하면 됩니다. 만약 정렬된 맵 컨테이너를 인덱스와 함께 순회하고 싶다면 `map.asIterable().withIndex()`을 사용합니다.
 
 ## 2.6 영역함수: let, apply, also, with
+
+
+## 2.7 연산자 오버로딩
+
+
+# 3. 마무리
