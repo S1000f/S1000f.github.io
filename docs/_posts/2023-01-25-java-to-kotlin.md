@@ -85,13 +85,13 @@ fun intToBytes(bigInteger: BigInteger): ByteArray {
 ## 1.3 널이 불가능한 타입과 가능한 타입의 구분
 
 ```java
-  public String stringOrNull(){
-    if(ThreadLocalRandom.current().nextBoolean()){
-    return"hello";
-    }else{
-    return null;
+  public String stringOrNull() {
+    if(ThreadLocalRandom.current().nextBoolean()) {
+      return"hello";
+    } else {
+      return null;
     }
-    }
+  }
 ```
 
 ```kotlin
@@ -111,15 +111,15 @@ fun stringOrNull(): String? {
 ## 1.4 if, try 키워드는 값을 생성하는 표현식
 
 ```java
-  public int stringToInt(String s){
+  public int stringToInt(String s) {
     int num;
-    try{
-    num=Integer.parseInt(s);
-    }catch(NumberFormatException e){
-    num=0;
+    try {
+      num=Integer.parseInt(s);
+    } catch (NumberFormatException e) {
+      num=0;
     }
     return num;
-    }
+  }
 ```
 
 ```kotlin
@@ -149,13 +149,13 @@ fun stringOrNull(): String? {
 ## 1.5 반복문
 
 ```java
-  public void loop(List<Integer> list){
-    for(int i=0;i<list.size();i++){
-    if(list.get(i)>2){
-    System.out.println(i);
+  public void loop(List<Integer> list) {
+    for (int i = 0; i< list.size(); i++) {
+      if (list.get(i) > 2) {
+        System.out.println(i);
+      }
     }
-    }
-    }
+  }
 ```
 
 ```kotlin
@@ -174,12 +174,12 @@ fun loop(list: List<Int>) {
 ## 1.6 val 과 var
 
 ```java
-  public static void main(String[]args){
+  public static void main(String[]args) {
     String mut="mutable";
-final String imut="immutable";
+    final String imut="immutable";
     mut="mutable2";
     imut="immutable2"; // error
-    }
+  }
 ```
 
 ```kotlin
@@ -197,13 +197,13 @@ fun main() {
 ## 1.7 변경 가능 혹은 변경 불가능한 컬렉션
 
 ```java
-  public static void main(String[]args){
+  public static void main(String[]args) {
     Map<Integer, String> map=new HashMap<>();
     Map<Integer, String> map1=Collections.unmodifiableMap(map);
 
     map.put(1,"one");
     map1.put(1,"one"); // exception
-    }
+  }
 ```
 
 ```kotlin
@@ -229,9 +229,9 @@ fun main() {
 ## 1.8 문자열 편의기능
 
 ```java
-  public String log(String prefix,String message){
+  public String log(String prefix,String message) {
     return Instant.now()+":"+prefix+": "+message;
-    }
+  }
 ```
 
 ```kotlin
@@ -247,12 +247,12 @@ fun log(prefix: String, message: String): String {
   public static void main(String[]args){
     String greeting="hi";
     String body="<body>"
-    +"<p>"+greeting+"</p>"
-    +"</body>";
+      +"<p>"+greeting+"</p>"
+      +"</body>";
 
     String json=
-    "{\"jsonrpc\":\"2.0\",\"method\":\"subtract\",\"params\":[42,23],\"id\":1}";
-    }
+      "{\"jsonrpc\":\"2.0\",\"method\":\"subtract\",\"params\":[42,23],\"id\":1}";
+  }
 ```
 
 ```kotlin
