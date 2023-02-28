@@ -112,3 +112,119 @@ public class WebSocketController {
 
 ```
 
+우선 싱글스레드로 가장하여 메시지를 브로드캐스팅 해보겠습니다. 위와 같이 컨트롤러 매핑 메소드를 간단하게 작성했습니다.
+
+![](../images/websocket-01.png)
+
+인텔리제이에서 지원하는 HTTP client 기능을 사용하여 테스트 하겠습니다.
+웹소켓은 ws 혹은 wss 스킴을 사용합니다. 우리가 설정한 웹소켓 핸들러는 '/bin' 경로에 매핑되어 있으므로, 해당 URI 로 접속합니다.
+접속에 성공하고 'connected' 메시지를 서버로 부터 받았습니다.
+
+![](../images/websocket-02.png)
+
+준비한 POST 요청을 보내면, 서버에서는 해당 메시지를 모든 연결된 웹소켓 세션의 클라이언트로 브로드캐스팅 합니다.
+'hi there' 라는 메시지가 잘 전달되었습니다.
+
+---
+
+## 2.2 멀티스레드인 경우
+
+```java
+@GetMapping("/ws/run")
+public ResponseEntity<?> run() {
+    IntStream.range(0, 100)
+        .forEach(n -> new Thread(() -> webSocketBroadcaster.broadcast("message: " + n)).start());
+
+    return ResponseEntity.ok().build();
+}
+```
+
+이번에는 서버에서 멀티스레드로 메시지를 웹소켓 클라이언트에게 전달하는 테스트를 하겠습니다.
+위 메소드가 호출되면 100개의 스레드를 생성하여 각각의 스레드에서 `broadcast` 메소드를 연속적으로 호출합니다.
+
+![](../images/websocket-03.png)
+
+메시지가 클라이언트로 전달 되었습니다. 하지만 누락이 있습니다. 전체 메시지의 갯수는 100개가 되어야 하지만 이번 테스트에서는 71개의 메시지만 전달되었습니다.
+(당연히 성공한 메시지의 종류와 총 개수는 매 테스트마다 달라질 수 있습니다)
+
+![](../images/websocket-04.png)
+
+서버의 콘솔을 살펴보면 익셉션이 많이 발생했음을 알 수 있습니다.
+이는 하나의 세션에서 아직 전송이 끝나지 않은 상태에서 다른 스레드가 해당 세션에 메시지를 전송하려고 시도했기 때문입니다.
+즉, 자바 명세에 정의된 웹소켓 세션은 스레드 안전(thread-safe)하지 않습니다.
+
+---
+
+# 3. 스레드 안전하게 메시지 전달하기
+
+스프링 멀티스레드 환경에서 안전하게 웹소켓으로 메시지를 전달하기 위해서 아래 방법을 사용해볼 수 있을 것 같습니다.
+
+- `synchronized` 키워드를 사용하여 메소드 동기화를 수행
+- 동시성 지원 큐(queue)를 사용하거나 외부 메시징 브로커를 사용
+- 스프링에서 제공하는 동시성 지원 데코레이터 사용
+
+---
+
+## 3.1 `synchronized` 키워드 사용
+
+```java
+  public synchronized void broadcast(String message) {
+    sessionMap.values()
+        .forEach(session -> {
+          try {
+            session.sendMessage(new TextMessage(message));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+  }
+```
+
+`broadcast` 메소드에 `synchronized` 키워드를 추가하여 동기화를 수행하면 스레드 안전하게 메시지를 전달할 수 있습니다.
+
+![](../images/websocket-05.png)
+
+이번에는 100개의 메시지가 예외발생 없이 모두 전달되었습니다.
+위에서 언급했듯이, 각 메시지당 하나의 스레드를 생성하므로 메시지의 전달 순서는 보장되지 않습니다.
+
+## 3.2 동시성 지원 큐 사용
+
+이번에는 이 포스트의 제목처럼 `synchronized` 키워드를 사용하지 않고, 대신에 동시성 지원 큐를 사용하여 메시지를 전달해보겠습니다.
+
+```java
+@Component
+public class WebSocketBroadcaster extends TextWebSocketHandler {
+
+  private final Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
+  private final BlockingQueue<String> messageQueue = new ArrayBlockingQueue<>(500);
+  private final ScheduledExecutorService executorService = 
+      Executors.newScheduledThreadPool(1);
+
+  @PostConstruct
+  public void poll() {
+    executorService.scheduleAtFixedRate(() -> {
+      List<String> messages = new ArrayList<>();
+      messageQueue.drainTo(messages);
+      messages.forEach(this::broadcast);
+    }, 0, 1, TimeUnit.MILLISECONDS);
+  }
+
+  public void enqueue(String message) {
+    messageQueue.add(message);
+  }
+
+  public void broadcast(String message) {
+    sessionMap.values()
+        .forEach(session -> {
+          try {
+            session.sendMessage(new TextMessage(message));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+  }
+
+  // the rest of the same code...
+}
+```
+
